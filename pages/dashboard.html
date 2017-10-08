@@ -116,22 +116,32 @@
           const userId = readCookie("access-token")
           $.ajax({
             type: 'GET',
-            url: 'https://981c952e.ngrok.io/users/me/loan-proposals?userId='+userId,
+            url: 'https://322b3761.ngrok.io/users/me/loan-proposals?userId='+userId,
             success: function (response) {
-              if(response["success"] && response["proposals"]) {
+              if(response["success"] && response["proposals"] && response["proposals"].length > 0 ) {
                 var tableData = ''
                 response["proposals"].forEach(function (proposal, i) {
-                  tableData = tableData + '<tr>'
-                  tableData = tableData + '<td class="text-center">' + (i + 1) + '</td>'
-                  tableData = tableData + '<td class="text-center">' + proposal.amount + '</td>'
-                  tableData = tableData + '<td class="text-center">' + proposal.maxROI + '</td>'
-                  tableData = tableData + '<td class="text-center">' + proposal.duration + '</td>'
-                  tableData = tableData + '<td class="text-center">' + proposal.status + '</td>'
+                  tableData = tableData + "<tr class=\"lender-info\" id = \"borrow-table-"+ (i+1) + "\">"
+                  tableData = tableData + '<td>' + (i + 1) + '</td>'
+                  tableData = tableData + '<td>' + proposal.amount + '</td>'
+                  tableData = tableData + '<td>' + proposal.maxROI + '</td>'
+                  tableData = tableData + '<td>' + proposal.duration + '</td>'
+                  tableData = tableData + '<td>' + proposal.status + '</td>'
                   tableData = tableData + '</tr>'
+
                 })
                 console.log(response)
+
                 //alert(JSON.stringify(response))
                 $("#my-proposal-table-body").html(tableData);
+                response["proposals"].forEach(function (proposal, i) {
+                  const lenderDetails = proposal["lenderDetails"]
+                  const id = "#" + "borrow-table-"+(i+1)
+                  $(id).data("lenderInfo", lenderDetails)
+                  $(id).on("click", function () {
+                    console.log($(this).data("lenderInfo"));
+                  })
+                })
               } else {
                 $("#my-proposal-table-body").html('<tr> <td colspan="5" class="text-center">No Proposals Yet</td> </tr>');
               }
@@ -164,9 +174,9 @@
         <script>
           $.ajax({
             type: 'GET',
-            url: 'https://981c952e.ngrok.io/users/loan-proposals?userId='+readCookie("access-token"),
+            url: 'https://322b3761.ngrok.io/users/loan-proposals?userId='+readCookie("access-token"),
             success: function (response) {
-              if(response["success"] && response["proposals"]) {
+              if(response["success"] && response["proposals"] && response["proposals"].length > 0) {
                 var tableData = ''
                 response["proposals"].forEach(function (proposal, i) {
                   tableData = tableData + '<tr>'
@@ -177,7 +187,7 @@
                   tableData = tableData + '<td class="text-center">' + proposal.status + '</td>'
                   tableData = tableData + '<td class="text-center">' + proposal.borrowerUserId + '</td>'
                   if (proposal.status === 'Open') {
-                    tableData = tableData + '<td class="text-center"><a href="https://981c952e.ngrok.io/loan-proposals/accept?userId=' + userId + '&proposalId='+proposal.proposalId+'" target="_blank">Accept</a></td>'
+                    tableData = tableData + '<td class="text-center"><a onclick="acceptProposal(\''+ userId +'\',\'' + proposal.proposalId + '\')">Accept</a></td>'
                   } else {
                     tableData = tableData + '<td class="text-center">DONE</td>'
                   }
@@ -187,11 +197,11 @@
                 //alert(JSON.stringify(response))
                 $("#proposal-requests-table-body").html(tableData);
               } else {
-                $("#proposal-requests-table-body").html('<tr> <td colspan="5" class="text-center">No Proposals Yet</td> </tr>');
+                $("#proposal-requests-table-body").html('<tr> <td colspan="7" class="text-center">No Proposals Yet</td> </tr>');
               }
             },
             error: function (response) {
-              $("#proposal-requests-table-body").html('<tr> <td colspan="5" class="text-center">No Proposals Yet</td> </tr>');
+              $("#proposal-requests-table-body").html('<tr> <td colspan="7" class="text-center">No Proposals Yet</td> </tr>');
             }
           });
         </script>
@@ -219,7 +229,7 @@
 
     $.ajax({
       type: 'post',
-      url: 'https://981c952e.ngrok.io/loan-proposals/create',
+      url: 'https://322b3761.ngrok.io/loan-proposals/create',
       data: data,
       success: function (data) {
         if(data["success"]) {
@@ -260,7 +270,7 @@
     }
     $.ajax({
       type: 'post',
-      url: 'https://981c952e.ngrok.io/lend-proposals/create',
+      url: 'https://322b3761.ngrok.io/lend-proposals/create',
       data: data,
       success: function (data) {
         if(data["success"]) {
