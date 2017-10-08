@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">Username</span>
+            <input type="text" class="form-control" placeholder="Username" id="form-username" aria-describedby="basic-addon1" readonly>
+            <span class="input-group-addon secondary-button">Save</span>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">Mobile</span>
+            <input type="text" class="form-control" placeholder="Mobile Number" id="form-mobile" aria-describedby="basic-addon1">
+            <span class="input-group-addon secondary-button" id="button-form-mobile" onclick="updateMobile()">Save</span>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">Email-id</span>
+            <input type="email" class="form-control" placeholder="Email-id" id="form-email" aria-describedby="basic-addon1">
+            <span class="input-group-addon secondary-button" id="button-form-email" onclick="updateEmail()">Save</span>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">Aadhar Number</span>
+            <input type="text" class="form-control" placeholder="Aadhar Number" id="form-aadhar-no" aria-describedby="basic-addon1">
+            <span class="input-group-addon secondary-button" id="button-form-aadhar-no" onclick="updateAadharNo()">Save</span>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">Date of Birth</span>
+            <input type="text" class="form-control" name="date" placeholder="MM/DD/YYYY" id="form-dob" aria-describedby="basic-addon1"/>
+            <span class="input-group-addon secondary-button" id="button-form-dob" onclick="updateDOB()">Save</span>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">Aadhar Status</span>
+            <input type="text" class="form-control" placeholder="Not Verified" id="form-aadhar-status" aria-describedby="basic-addon1" readonly/>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">PAN Card Status</span>
+            <input type="text" class="form-control" placeholder="Not Verified" id="form-pan-status" aria-describedby="basic-addon1" readonly/>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">Driving License Status</span>
+            <input type="text" class="form-control" placeholder="Not Verified" id="form-license-status" aria-describedby="basic-addon1" readonly/>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">KYC Status</span>
+            <input type="text" class="form-control" placeholder="Not Verified" id="form-kyc-status" aria-describedby="basic-addon1" readonly/>
+        </div>
+        <br/>
+        <div class="row input-group">
+
+            <span class="input-group-addon" id="basic-addon1">Aadhar Card</span>
+            <input type="file" class="form-control" id="form-aadhar-image" aria-describedby="basic-addon1">
+            <span class="input-group-addon secondary-button" id="button-form-aadhar-image" onclick="updateAadhar()">Save</span>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">Pan Card</span>
+            <input type="file" class="form-control" id="form-pan-image" aria-describedby="basic-addon1">
+            <span class="input-group-addon secondary-button" id="button-form-pan-image" onclick="updatePan()">Save</span>
+        </div>
+        <br/>
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">Driving License</span>
+            <input type="file" class="form-control" id="form-license-image" aria-describedby="basic-addon1">
+            <span class="input-group-addon secondary-button" id="button-form-license-image" onclick="updateLicense()">Save</span>
+        </div>
+        <br/>
+
+        <script>
+          $(document).ready(function(){
+            var date_input=$('input[name="date"]'); //our date input has the name "date"
+            var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+            date_input.datepicker({
+              format: 'mm/dd/yyyy',
+              container: container,
+              todayHighlight: true,
+              autoclose: true,
+            })
+          })
+        </script>
+        <br/>
+    </div>
+</div>

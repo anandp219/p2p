@@ -1,0 +1,214 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">My Profile Score</div>
+            <div class="panel-body"><span class="stars" id="rating">4.8618164</span> </div>
+        </div>
+        <script>
+          $(function() {
+            $('span.stars').stars();
+          });
+          $.fn.stars = function() {
+            return $(this).each(function() {
+              // Get the value
+              var val = parseFloat($(this).html());
+              // Make sure that the value is in 0 - 5 range, multiply to get width
+              var size = Math.max(0, (Math.min(5, val))) * 16;
+              // Create stars holder
+              var $span = $('<span />').width(size);
+              // Replace the numerical value with stars
+              $(this).html($span);
+            });
+          }
+        </script>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">New Borrowing Proposal</div>
+            <div class="panel-body">
+                <form class="form-horizontal" id="form-borrowing">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="ROI" id="form-roi" placeholder="ROI (Maximum)">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="duration" id="form-time" placeholder="Period (Months)">
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="Amount" class="form-control" name="amount" id="form-amount" placeholder="Amount (in Rupees) ">
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <textarea class="form-control" rows="5" id="form-reason" name="reason" placeholder="Reason for borrowing money"></textarea>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <input type="submit" class="btn btn-primary" value="Send the Proposal">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">New Lending Proposal</div>
+            <div class="panel-body">
+                <form class="form-horizontal" id="form-lending">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="ROI" id="form-lend-roi" placeholder="ROI (Minimum)">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="duration" id="form-lend-time" placeholder="Period (Months)">
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="Amount" class="form-control" name="amount"" id="form-lend-amount" placeholder="Amount (Maximum in Rupees) ">
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <textarea class="form-control" rows="5" name="comments" id="form-lend-reason" placeholder="Any comments"></textarea>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <input type="submit" class="btn btn-primary" value="Send the Proposal">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">My Proposals</div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Amount</th>
+                    <th>ROI</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
+        <script>
+          $.ajax({
+            type: 'GET',
+            url: 'https://981c952e.ngrok.io/users/me/loan-proposals',
+            success: function (response) {
+              if(response["success"]) {
+                alert(JSON.stringify(response))
+              } else {
+                $("#table-body").html('<tr> <td colspan="5" class="text-center">No Proposals Yet</td> </tr>');
+              }
+            },
+            error: function (response) {
+              $("#table-body").html('<tr> <td colspan="5" class="text-center">No Proposals Yet</td> </tr>');
+            }
+          });
+        </script>
+    </div>
+
+</div>
+<script type="text/javascript">
+  var frm = $('#form-borrowing');
+  frm.submit(function (e) {
+    e.preventDefault();
+    var formData  = frm.serialize();
+    formData =formData.split("&");
+    var obj={};
+    for(var key in formData)
+    {
+      obj[formData[key].split("=")[0]] = formData[key].split("=")[1];
+    }
+    const data = {
+      userId: readCookie("access-token"),
+      maxROI: obj["ROI"],
+      amount: obj["amount"],
+      reason: obj["reason"] || "",
+      duration: obj["duration"]
+    }
+
+    $.ajax({
+      type: 'post',
+      url: 'https://981c952e.ngrok.io/loan-proposals/create',
+      data: data,
+      success: function (data) {
+        if(data["success"]) {
+          alert("Successfully Submitted Proposal")
+        } else {
+          alert("Error occured while submitting proposal")
+        }
+        location.reload()
+      },
+      error: function (data) {
+        alert("Error occured while submitting proposal")
+        location.reload()
+      },
+    });
+    return false
+
+  });
+
+
+
+
+  var frm2 = $('#form-lending');
+  frm2.submit(function (e) {
+    e.preventDefault();
+    var formData  = frm2.serialize();
+    formData =formData.split("&");
+    var obj={};
+    for(var key in formData)
+    {
+      obj[formData[key].split("=")[0]] = formData[key].split("=")[1];
+    }
+    const data = {
+      userId: readCookie("access-token"),
+      minROI: obj["ROI"],
+      amount: obj["amount"],
+      reason: obj["comments"] || "",
+      duration: obj["duration"]
+    }
+    $.ajax({
+      type: 'post',
+      url: 'https://981c952e.ngrok.io/lend-proposals/create',
+      data: data,
+      success: function (data) {
+        if(data["success"]) {
+          alert("Successfully Submitted Proposal")
+        } else {
+          alert("Error occured while submitting proposal")
+        }
+        location.reload()
+      },
+      error: function (data) {
+        alert("Error occured while submitting proposal")
+        location.reload()
+      },
+    });
+    return false
+
+  });
+</script>
