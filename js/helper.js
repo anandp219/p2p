@@ -32,7 +32,7 @@ function getUserInfo() {
   const userId = readCookie("access-token")
   $.ajax({
     type: 'GET',
-    url: 'https://981c952e.ngrok.io/users?userId='+userId,
+    url: 'https://322b3761.ngrok.io/users?userId='+userId,
     success: function (response) {
       updateUserInfo(response["user"])
     },
@@ -47,7 +47,7 @@ function getDashboard() {
   const userId = readCookie("access-token")
   $.ajax({
     type: 'GET',
-    url: 'https://981c952e.ngrok.io/users?userId='+userId,
+    url: 'https://322b3761.ngrok.io/users?userId='+userId,
     success: function (response) {
       updateDashboard("dashboard")
     },
@@ -63,7 +63,7 @@ function updateAadhar() {
   var form_data = new FormData(); // Creating object of FormData class
   form_data.append("file", file_data)
   $.ajax({
-    url: 'https://981c952e.ngrok.io/users/doc/upload?userId='+readCookie("access-token")+'&type=aadhaar',
+    url: 'https://322b3761.ngrok.io/users/doc/upload?userId='+readCookie("access-token")+'&type=aadhaar',
     cache: false,
     contentType: false,
     processData: false,
@@ -86,7 +86,7 @@ function updatePan() {
   var form_data = new FormData(); // Creating object of FormData class
   form_data.append("file", file_data)
   $.ajax({
-    url: 'https://981c952e.ngrok.io/users/doc/upload?userId='+readCookie("access-token")+'&type=pan',
+    url: 'https://322b3761.ngrok.io/users/doc/upload?userId='+readCookie("access-token")+'&type=pan',
     cache: false,
     contentType: false,
     processData: false,
@@ -109,7 +109,7 @@ function updateLicense() {
   var form_data = new FormData(); // Creating object of FormData class
   form_data.append("file", file_data)
   $.ajax({
-    url: 'https://981c952e.ngrok.io/users/doc/upload?userId='+readCookie("access-token")+'&type=license',
+    url: 'https://322b3761.ngrok.io/users/doc/upload?userId='+readCookie("access-token")+'&type=license',
     cache: false,
     contentType: false,
     processData: false,
@@ -133,7 +133,7 @@ function updateEmail() {
     email: email
   }
   $.ajax({
-    url: 'https://981c952e.ngrok.io/users/update?userId='+readCookie("access-token"),
+    url: 'https://322b3761.ngrok.io/users/update?userId='+readCookie("access-token"),
     dataType: 'json',
     data: data,
     type: 'post',
@@ -154,7 +154,7 @@ function updateMobile() {
     mobile: mobile
   }
   $.ajax({
-    url: 'https://981c952e.ngrok.io/users/update?userId='+readCookie("access-token"),
+    url: 'https://322b3761.ngrok.io/users/update?userId='+readCookie("access-token"),
     dataType: 'json',
     data: data,
     type: 'post',
@@ -176,7 +176,7 @@ function updateDOB() {
   }
   alert(JSON.stringify(dob))
   $.ajax({
-    url: 'https://981c952e.ngrok.io/users/update?userId='+readCookie("access-token"),
+    url: 'https://322b3761.ngrok.io/users/update?userId='+readCookie("access-token"),
     dataType: 'json',
     data: data,
     type: 'post',

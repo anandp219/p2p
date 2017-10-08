@@ -4,6 +4,14 @@ body {
 #forms {
     margin-top: 90px;
 }
+.lender-info:hover {
+    cursor: pointer;
+}
+
+.lender-info:active {
+    cursor: pointer;
+}
+
 
 
 a:hover {

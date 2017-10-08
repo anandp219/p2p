@@ -79,7 +79,7 @@
     e.preventDefault();
     $.ajax({
       type: 'POST',
-      url: 'https://981c952e.ngrok.io/users/signin',
+      url: 'https://322b3761.ngrok.io/users/signin',
       data: loginForm.serialize(),
       success: function (response) {
         if(response["success"]) {
@@ -98,7 +98,7 @@
     e.preventDefault();
     $.ajax({
       type: 'POST',
-      url: 'https://981c952e.ngrok.io/users/signup',
+      url: 'https://322b3761.ngrok.io/users/signup',
       data: registerForm.serialize(),
       success: function (response) {
         if(response["success"]) {
